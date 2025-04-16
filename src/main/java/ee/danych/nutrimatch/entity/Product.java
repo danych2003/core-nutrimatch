@@ -1,6 +1,7 @@
 package ee.danych.nutrimatch.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,12 +25,14 @@ public class Product {
     private String code;
     private String synonyms;
     private String foodGroup;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductName> productNames;
     private BigDecimal energy;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ProductName> productNames;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Element> elements;
 }
 
