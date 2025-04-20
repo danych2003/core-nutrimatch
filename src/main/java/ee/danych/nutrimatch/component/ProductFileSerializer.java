@@ -60,7 +60,7 @@ public class ProductFileSerializer {
                     }
                 }
                 switch (cell.getColumnIndex()) {
-                    case 0:  // Предположим, что первый столбец - это код продукта
+                    case 0:
                         try {
                             product.setCode(String.valueOf((int) cell.getNumericCellValue()));
                         } catch (IllegalStateException illegalArgumentException) {
@@ -69,21 +69,21 @@ public class ProductFileSerializer {
                         }
 
                         break;
-                    case 1:  // Второй столбец - это название продукта
+                    case 1:
                         ProductName productNameEt = new ProductName();
                         productNameEt.setProduct(product);
                         productNameEt.setLanguage(Language.ET.name());
                         productNameEt.setName(cell.getStringCellValue());
                         product.getProductNames().add(productNameEt);
                         break;
-                    case 3:  // Второй столбец - это название продукта
+                    case 3:
                         ProductName productNameRu = new ProductName();
                         productNameRu.setProduct(product);
                         productNameRu.setLanguage(Language.RU.name());
                         productNameRu.setName(cell.getStringCellValue());
                         product.getProductNames().add(productNameRu);
                         break;
-                    case 2:  // Второй столбец - это название продукта
+                    case 2:
                         ProductName productNameEn = new ProductName();
                         productNameEn.setProduct(product);
                         productNameEn.setLanguage(Language.EN.name());
@@ -435,7 +435,7 @@ public class ProductFileSerializer {
                         nickel.setQuantity(BigDecimal.valueOf(cell.getNumericCellValue()).setScale(4, RoundingMode.HALF_UP));
                         product.getElements().add(nickel);
                         break;
-                    case 57:  // Витамин A
+                    case 57:
                         Element vitaminA = new Element();
                         vitaminA.setProduct(product);
                         vitaminA.setName("Vitamin A");
