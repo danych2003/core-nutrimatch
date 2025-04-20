@@ -1,4 +1,4 @@
-# 🛡️ Backend API – Authentication & Product Management
+# 🛡️ NutriMatch - Backend API – Authentication & Product Management
 
 ## 📖 Description
 
@@ -19,7 +19,7 @@ This project is a RESTful backend built with **Spring Boot**, providing:
 - Spring Security
 - JWT (JSON Web Token)
 - H2 / PostgreSQL
-- Maven or Gradle
+- Gradle
 - Lombok
 
 ## 🚀 Endpoints
