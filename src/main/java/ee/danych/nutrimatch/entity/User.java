@@ -1,15 +1,20 @@
 package ee.danych.nutrimatch.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "client")
+@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -17,13 +22,17 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    @NotNull
-    @Size(min = 5, max = 12)
     private String username;
+
+    @Nullable
     @Column(name = "first_name")
     private String firstName;
+
+    @Nullable
     @Column(name = "last_name")
     private String lastName;
+
+    @Nullable
     private String email;
 
     @Column(name = "password_hash")
