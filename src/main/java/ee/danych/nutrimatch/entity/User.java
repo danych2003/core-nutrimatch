@@ -35,6 +35,10 @@ public class User {
     @Nullable
     private String email;
 
+    @Nullable
+    @Column(length = 100000)
+    private String avatarBase64;
+
     @Column(name = "password_hash")
     private String passwordHash;
 

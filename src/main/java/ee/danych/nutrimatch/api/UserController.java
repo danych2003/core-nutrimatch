@@ -1,16 +1,14 @@
 package ee.danych.nutrimatch.api;
 
 import ee.danych.nutrimatch.dto.UserDTO;
+import ee.danych.nutrimatch.entity.User;
 import ee.danych.nutrimatch.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -28,5 +26,27 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO user) {
         return userService.verify(user);
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<?> getUser(@PathVariable String username) {
+        ResponseUser user = getResponseUser(userService.findUser(username));
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/user/avatar/{username}")
+    public ResponseEntity<?> updateUserAvatar(@PathVariable String username, @RequestBody String photoBase64) {
+        ResponseUser user = getResponseUser(userService.updateUserAvatar(username, photoBase64));
+        return ResponseEntity.ok(user);
+    }
+
+    private ResponseUser getResponseUser(User user) {
+        return ResponseUser.builder()
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .avatarBase64(user.getAvatarBase64())
+                .build();
     }
 }

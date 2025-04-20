@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -55,6 +57,17 @@ public class UserService {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    public User findUser(String username) {
+        return Optional.ofNullable(userRepository.findByUsername(username)).orElseThrow(() -> new UserNotFoundException(username));
+    }
+
+    public User updateUserAvatar(String username, String avatarBase64) {
+        User user = Optional.ofNullable(userRepository.findByUsername(username))
+                .orElseThrow(() -> new UserNotFoundException(username));
+        user.setAvatarBase64(avatarBase64);
+        return userRepository.save(user);
     }
 
     private User createUserFromDTO(UserDTO userDTO) {
