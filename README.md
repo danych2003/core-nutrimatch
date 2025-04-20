@@ -14,7 +14,7 @@ This project is a RESTful backend built with **Spring Boot**, providing:
 
 ## 🛠️ Tech Stack
 
-- Java 17+
+- Java 24
 - Spring Boot
 - Spring Security
 - JWT (JSON Web Token)
