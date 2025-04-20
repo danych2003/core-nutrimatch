@@ -1,6 +1,8 @@
 package ee.danych.nutrimatch.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -15,6 +17,8 @@ public class User {
     private Long id;
 
     @Column(unique = true)
+    @NotNull
+    @Size(min = 5, max = 12)
     private String username;
     @Column(name = "first_name")
     private String firstName;

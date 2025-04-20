@@ -1,9 +1,9 @@
 package ee.danych.nutrimatch.service;
 
 import ee.danych.nutrimatch.entity.User;
+import ee.danych.nutrimatch.exceptions.UserAlreadyExistsException;
 import ee.danych.nutrimatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ public class UserService {
 
     public ResponseEntity<?> register(User user) {
         if (userRepository.existsUserByUsername(user.getUsername())) {
-            return new ResponseEntity<>("User with " + user.getUsername() + " already exists", HttpStatus.BAD_REQUEST);
+            throw new UserAlreadyExistsException(user.getUsername());
         }
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
