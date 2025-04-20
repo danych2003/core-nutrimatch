@@ -1,7 +1,7 @@
 package ee.danych.nutrimatch.service;
 
 import ee.danych.nutrimatch.component.ProductFileSerializer;
-import ee.danych.nutrimatch.entity.Product;
+import ee.danych.nutrimatch.model.entity.Product;
 import ee.danych.nutrimatch.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

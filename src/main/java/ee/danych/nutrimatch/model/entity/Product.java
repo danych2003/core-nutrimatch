@@ -1,16 +1,20 @@
-package ee.danych.nutrimatch.entity;
+package ee.danych.nutrimatch.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @Table(name = "product")
 public class Product {
     public Product() {

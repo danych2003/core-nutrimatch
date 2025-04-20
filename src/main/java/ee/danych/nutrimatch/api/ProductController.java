@@ -1,6 +1,6 @@
 package ee.danych.nutrimatch.api;
 
-import ee.danych.nutrimatch.entity.Product;
+import ee.danych.nutrimatch.model.entity.Product;
 import ee.danych.nutrimatch.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

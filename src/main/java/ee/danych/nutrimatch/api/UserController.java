@@ -1,7 +1,7 @@
 package ee.danych.nutrimatch.api;
 
 import ee.danych.nutrimatch.dto.UserDTO;
-import ee.danych.nutrimatch.entity.User;
+import ee.danych.nutrimatch.model.entity.User;
 import ee.danych.nutrimatch.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package ee.danych.nutrimatch.repository;
 
-import ee.danych.nutrimatch.entity.User;
+import ee.danych.nutrimatch.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

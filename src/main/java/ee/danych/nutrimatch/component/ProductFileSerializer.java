@@ -1,9 +1,9 @@
 package ee.danych.nutrimatch.component;
 
-import ee.danych.nutrimatch.entity.Element;
-import ee.danych.nutrimatch.entity.Language;
-import ee.danych.nutrimatch.entity.Product;
-import ee.danych.nutrimatch.entity.ProductName;
+import ee.danych.nutrimatch.model.entity.Element;
+import ee.danych.nutrimatch.model.entity.Product;
+import ee.danych.nutrimatch.model.entity.ProductName;
+import ee.danych.nutrimatch.model.enums.Language;
 import ee.danych.nutrimatch.repository.ExceptionChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.util.ZipSecureFile;
@@ -72,28 +72,28 @@ public class ProductFileSerializer {
                     case 1:
                         ProductName productNameEt = new ProductName();
                         productNameEt.setProduct(product);
-                        productNameEt.setLanguage(Language.ET.name());
+                        productNameEt.setLanguage(Language.ET);
                         productNameEt.setName(cell.getStringCellValue());
                         product.getProductNames().add(productNameEt);
                         break;
                     case 3:
                         ProductName productNameRu = new ProductName();
                         productNameRu.setProduct(product);
-                        productNameRu.setLanguage(Language.RU.name());
+                        productNameRu.setLanguage(Language.RU);
                         productNameRu.setName(cell.getStringCellValue());
                         product.getProductNames().add(productNameRu);
                         break;
                     case 2:
                         ProductName productNameEn = new ProductName();
                         productNameEn.setProduct(product);
-                        productNameEn.setLanguage(Language.EN.name());
+                        productNameEn.setLanguage(Language.EN);
                         productNameEn.setName(cell.getStringCellValue());
                         product.getProductNames().add(productNameEn);
                         break;
                     case 4:
                         ProductName productNameLv = new ProductName();
                         productNameLv.setProduct(product);
-                        productNameLv.setLanguage(Language.LV.name());
+                        productNameLv.setLanguage(Language.LV);
                         productNameLv.setName(cell.getStringCellValue());
                         product.getProductNames().add(productNameLv);
                         break;

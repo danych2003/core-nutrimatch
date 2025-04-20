@@ -1,6 +1,6 @@
 package ee.danych.nutrimatch.service;
 
-import ee.danych.nutrimatch.entity.User;
+import ee.danych.nutrimatch.model.entity.User;
 import ee.danych.nutrimatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

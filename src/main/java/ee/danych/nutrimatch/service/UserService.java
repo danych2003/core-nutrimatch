@@ -1,10 +1,10 @@
 package ee.danych.nutrimatch.service;
 
 import ee.danych.nutrimatch.dto.UserDTO;
-import ee.danych.nutrimatch.entity.User;
 import ee.danych.nutrimatch.exceptions.InvalidPasswordException;
 import ee.danych.nutrimatch.exceptions.UserAlreadyExistsException;
 import ee.danych.nutrimatch.exceptions.UserNotFoundException;
+import ee.danych.nutrimatch.model.entity.User;
 import ee.danych.nutrimatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

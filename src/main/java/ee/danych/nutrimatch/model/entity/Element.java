@@ -1,14 +1,20 @@
-package ee.danych.nutrimatch.entity;
+package ee.danych.nutrimatch.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
-@Data
-public class Element {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Element extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "element_seq")
     @SequenceGenerator(name = "element_seq", sequenceName = "element_sequence", allocationSize = 1)
