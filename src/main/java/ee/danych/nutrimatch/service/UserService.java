@@ -2,17 +2,22 @@ package ee.danych.nutrimatch.service;
 
 import ee.danych.nutrimatch.dto.UserDTO;
 import ee.danych.nutrimatch.entity.User;
+import ee.danych.nutrimatch.exceptions.InvalidPasswordException;
 import ee.danych.nutrimatch.exceptions.UserAlreadyExistsException;
+import ee.danych.nutrimatch.exceptions.UserNotFoundException;
 import ee.danych.nutrimatch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -33,15 +38,22 @@ public class UserService {
     }
 
     public ResponseEntity<?> verify(UserDTO userDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        userDTO.getUsername(),
-                        userDTO.getPassword())
-        );
-
-        if (authentication.isAuthenticated()) {
-            return ResponseEntity.ok(jwtService.generateToken(userDTO.getUsername()));
+        if (!userRepository.existsUserByUsername(userDTO.getUsername())) {
+            throw new UserNotFoundException(userDTO.getUsername());
         }
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userDTO.getUsername(),
+                            userDTO.getPassword())
+            );
+            if (authentication.isAuthenticated()) {
+                return ResponseEntity.ok(jwtService.generateToken(userDTO.getUsername()));
+            }
+        } catch (BadCredentialsException exception) {
+            throw new InvalidPasswordException(userDTO.getUsername());
+        }
+
         return ResponseEntity.notFound().build();
     }
 
