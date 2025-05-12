@@ -1,4 +1,4 @@
-package ee.danych.nutrimatch.component;
+package ee.danych.nutrimatch.util;
 
 import ee.danych.nutrimatch.model.entity.Element;
 import ee.danych.nutrimatch.model.entity.Product;
@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,11 +23,12 @@ import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
-@Component
-public class ProductFileSerializer {
+public final class ProductFileSerializer {
 
+    private ProductFileSerializer() {
+    }
 
-    public List<Product> getProductsFromExcel() throws IOException {
+    public static List<Product> getProductsFromExcel() throws IOException {
         ZipSecureFile.setMinInflateRatio(0);
         FileInputStream file = getFileInputStream();
         Workbook workbook = new XSSFWorkbook(file);

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Element extends BaseEntity {
+public class Element {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "element_seq")
     @SequenceGenerator(name = "element_seq", sequenceName = "element_sequence", allocationSize = 1)

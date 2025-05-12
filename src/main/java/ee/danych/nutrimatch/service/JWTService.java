@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private final String secretkey = "8thi+MKAjaodXdM0muoUnAsue5LKdgfVQLlWSZ/8Tcg=";
+    @Value("${security.jwt.secret-key}")
+    private String secretkey;
 
 //    public JWTService() {
 //
@@ -51,8 +53,7 @@ public class JWTService {
 
     public String extractUsername(String token) {
         try {
-            var uwu = extractClaim(token, Claims::getSubject);
-            return uwu;
+            return extractClaim(token, Claims::getSubject);
         } catch (Exception e) {
             System.out.println("Failed to extract username from token: " + e.getMessage());
             return null;

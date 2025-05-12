@@ -1,8 +1,9 @@
 package ee.danych.nutrimatch.service;
 
-import ee.danych.nutrimatch.component.ProductFileSerializer;
+import ee.danych.nutrimatch.exceptions.ProductNotFoundException;
 import ee.danych.nutrimatch.model.entity.Product;
 import ee.danych.nutrimatch.repository.ProductRepository;
+import ee.danych.nutrimatch.util.ProductFileSerializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -21,7 +23,6 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductFileSerializer rawRepository;
 
     private static final int PAGE_SIZE = 30;
 
@@ -50,7 +51,7 @@ public class ProductService {
 
     public ResponseEntity<String> saveProductsFromExcel() throws IOException {
         log.info("Serialization process started");
-        List<Product> products = rawRepository.getProductsFromExcel();
+        List<Product> products = ProductFileSerializer.getProductsFromExcel();
         log.info("Serialization successfully ended started");
         productRepository.saveAll(products);
         log.info("Products successfully saved to database");
@@ -58,4 +59,14 @@ public class ProductService {
     }
 
 
+    public Product getProductById(Long id) {
+        return productRepository.getProductById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    public List<Product> getProductById(List<Long> ids) {
+        return ids.stream()
+                .map(id -> productRepository.findById(id).orElse(null))
+                .collect(Collectors.toList());
+    }
 }

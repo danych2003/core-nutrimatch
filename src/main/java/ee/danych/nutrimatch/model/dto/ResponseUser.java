@@ -1,4 +1,4 @@
-package ee.danych.nutrimatch.api;
+package ee.danych.nutrimatch.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

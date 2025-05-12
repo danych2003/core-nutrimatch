@@ -23,6 +23,9 @@ public class Recipe extends BaseEntity {
     private String title;
     private String description;
 
+    @Column(length = 100000)
+    private String avatarBase64;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -1,6 +1,7 @@
 package ee.danych.nutrimatch.api;
 
-import ee.danych.nutrimatch.dto.UserDTO;
+import ee.danych.nutrimatch.model.dto.ResponseUser;
+import ee.danych.nutrimatch.model.dto.auth.RegisterUserDto;
 import ee.danych.nutrimatch.model.entity.User;
 import ee.danych.nutrimatch.service.UserService;
 import jakarta.validation.Valid;
@@ -19,12 +20,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> register(@Valid @RequestBody UserDTO user) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterUserDto user) {
         return userService.register(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDTO user) {
+    public ResponseEntity<?> login(@RequestBody RegisterUserDto user) {
+        log.info("User with username {} successfully logged in.", user.getUsername());
         return userService.verify(user);
     }
 

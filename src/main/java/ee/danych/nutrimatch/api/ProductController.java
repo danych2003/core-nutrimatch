@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -63,5 +64,15 @@ public class ProductController {
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> test() throws IOException {
         return new ResponseEntity<>("Data", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Product>> findRecipesWithIds(@RequestParam("ids") String ids) throws IOException {
+        List<Long> productIds = Arrays.stream(ids.split(","))
+                .map(Long::parseLong)
+                .toList();
+        List<Product> products = productService.getProductById(productIds);
+        products.forEach(x -> System.out.println(x.getCode()));
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }
