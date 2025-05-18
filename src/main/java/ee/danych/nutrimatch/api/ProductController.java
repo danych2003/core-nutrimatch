@@ -22,7 +22,6 @@ public class ProductController {
 
     @PostMapping(value = "/product", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
-        System.out.println(product.getCode());
         this.productService.save(product);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
@@ -72,7 +71,6 @@ public class ProductController {
                 .map(Long::parseLong)
                 .toList();
         List<Product> products = productService.getProductById(productIds);
-        products.forEach(x -> System.out.println(x.getCode()));
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

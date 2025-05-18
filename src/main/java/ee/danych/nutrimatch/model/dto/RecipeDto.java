@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class RequestRecipe {
-    private RequestRecipe() {
+public class RecipeDto {
+    public RecipeDto() {
         products = new ArrayList<>();
     }
 

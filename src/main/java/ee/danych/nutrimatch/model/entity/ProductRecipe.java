@@ -17,7 +17,7 @@ public class ProductRecipe extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "p_recipe_seq")
     @SequenceGenerator(name = "p_recipe_seq", sequenceName = "p_recipe_sequence", allocationSize = 1)
-    private String id;
+    private Long id;
 
     @NonNull
     private BigDecimal quantity;

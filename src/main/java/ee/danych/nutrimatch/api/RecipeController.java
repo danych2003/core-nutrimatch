@@ -1,18 +1,19 @@
 package ee.danych.nutrimatch.api;
 
 import ee.danych.nutrimatch.components.RecipeMapper;
-import ee.danych.nutrimatch.model.dto.RequestRecipe;
+import ee.danych.nutrimatch.model.dto.RecipeDto;
 import ee.danych.nutrimatch.model.entity.Recipe;
-import ee.danych.nutrimatch.repository.RecipeRepository;
+import ee.danych.nutrimatch.service.RecipeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -20,14 +21,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecipeController {
 
     private final RecipeMapper recipeMapper;
-    private final RecipeRepository recipeRepository;
+    private final RecipeService recipeService;
 
     @PostMapping(value = "/recipe", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addRecipe(@Valid @RequestBody RequestRecipe requestRecipe) {
-        Recipe recipe = recipeMapper.parseRequestToEntity(requestRecipe);
-        recipeRepository.save(recipe);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+    public ResponseEntity<String> addRecipe(@Valid @RequestBody RecipeDto recipeDto) {
+        Recipe recipe = recipeMapper.parseDtoToEntity(recipeDto);
+        recipeService.save(recipe);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
+    @GetMapping(value = "/recipes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RecipeDto>> getRecipeWithFilters(
+            @RequestParam(value = "search_query", required = false, defaultValue = "") String keyWord,
+            @RequestParam(value = "current_page", required = false, defaultValue = "0") int page
+    ) {
+        Page<Recipe> recipes;
+        if(keyWord.isEmpty()) {
+            recipes = this.recipeService.findAllByPage(page);
+        } else {
+            recipes = this.recipeService.filterRecipesByWord(keyWord, page);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Available-Pages", String.valueOf(recipes.getTotalPages()));
 
+        List<RecipeDto> recipesResponse = recipes.getContent()
+                .stream().map(recipeMapper::parseEntityToDto)
+                .toList();
+        return new ResponseEntity<>(recipesResponse, headers, HttpStatus.OK);
+    }
 }

@@ -1,9 +1,9 @@
 package ee.danych.nutrimatch.service;
 
+import ee.danych.nutrimatch.components.ProductFileSerializer;
 import ee.danych.nutrimatch.exceptions.ProductNotFoundException;
 import ee.danych.nutrimatch.model.entity.Product;
 import ee.danych.nutrimatch.repository.ProductRepository;
-import ee.danych.nutrimatch.util.ProductFileSerializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService {
 
+    private final ProductFileSerializer productFileSerializer;
     private final ProductRepository productRepository;
 
     private static final int PAGE_SIZE = 30;
@@ -51,7 +52,7 @@ public class ProductService {
 
     public ResponseEntity<String> saveProductsFromExcel() throws IOException {
         log.info("Serialization process started");
-        List<Product> products = ProductFileSerializer.getProductsFromExcel();
+        List<Product> products = productFileSerializer.getProductsFromExcel();
         log.info("Serialization successfully ended started");
         productRepository.saveAll(products);
         log.info("Products successfully saved to database");

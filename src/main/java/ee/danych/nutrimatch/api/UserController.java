@@ -26,7 +26,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody RegisterUserDto user) {
-        log.info("User with username {} successfully logged in.", user.getUsername());
+        log.debug("User with username {} successfully logged in.", user.getUsername());
         return userService.verify(user);
     }
 

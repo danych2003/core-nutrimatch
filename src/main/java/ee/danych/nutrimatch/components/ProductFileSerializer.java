@@ -1,4 +1,4 @@
-package ee.danych.nutrimatch.util;
+package ee.danych.nutrimatch.components;
 
 import ee.danych.nutrimatch.model.entity.Element;
 import ee.danych.nutrimatch.model.entity.Product;
@@ -12,6 +12,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,14 +26,16 @@ import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
-public final class ProductFileSerializer {
+@Lazy
+@Component
+public class ProductFileSerializer {
 
-    private ProductFileSerializer() {
-    }
+    @Value("${product-serializer.path}")
+    private String productFilePath;
 
-    public static List<Product> getProductsFromExcel() throws IOException {
+    public List<Product> getProductsFromExcel() throws IOException {
         ZipSecureFile.setMinInflateRatio(0);
-        FileInputStream file = getFileInputStream();
+        FileInputStream file = getFileInputStream(productFilePath);
         Workbook workbook = new XSSFWorkbook(file);
         Sheet sheet = workbook.getSheetAt(0);
 
@@ -580,8 +585,8 @@ public final class ProductFileSerializer {
         return products;
     }
 
-    private static FileInputStream getFileInputStream() throws FileNotFoundException {
-        return new FileInputStream("tmp/export.xlsx");
+    private FileInputStream getFileInputStream(String path) throws FileNotFoundException {
+        return new FileInputStream(path);
     }
 
 }

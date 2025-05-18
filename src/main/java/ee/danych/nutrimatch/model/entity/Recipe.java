@@ -3,18 +3,21 @@ package ee.danych.nutrimatch.model.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "recipe")
 public class Recipe extends BaseEntity {
+    public Recipe() {
+        this.products = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recipe_seq")
     @SequenceGenerator(name = "recipe_seq", sequenceName = "recipe_seq", allocationSize = 1)

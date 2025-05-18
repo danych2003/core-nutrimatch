@@ -16,7 +16,13 @@ public final class AllergensFinder {
         return allergens;
     }
 
-    private static boolean findFish() {
+    private static boolean findFish(Product products) {
+
+        return true;
+    }
+
+    private static boolean findByFilters(Product product) {
+
         return true;
     }
 }
