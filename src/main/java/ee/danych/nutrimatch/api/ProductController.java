@@ -23,7 +23,7 @@ public class ProductController {
     @PostMapping(value = "/product", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         this.productService.save(product);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
 //    @GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
