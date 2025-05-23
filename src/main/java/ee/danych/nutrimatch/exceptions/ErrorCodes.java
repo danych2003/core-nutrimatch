@@ -10,7 +10,8 @@ public enum ErrorCodes {
     USER_NOT_FOUND("userNotFound"),
     INVALID_PASSWORD("invalidPassword"),
     BAD_REQUEST("badRequest"),
-    PRODUCT_NOT_FOUND("productNotFound");
+    PRODUCT_NOT_FOUND("productNotFound"),
+    XLSX_FILE_NOT_FOUND("xlsxFileNotFound");
 
     private final String errorCode;
 }

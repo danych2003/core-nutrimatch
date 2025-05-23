@@ -40,6 +40,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(XlsxFileNotFoundException.class)
+    public ResponseEntity<?> handleXlsxFileNotFoundException(XlsxFileNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCodes.XLSX_FILE_NOT_FOUND, exception.getMessage());
+        log.error("Error: {}, Message: {}, FilePath: {}", errorResponse.errorCode, errorResponse.errorMessage, exception.getFilePath());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         List<String> errors = exception.getBindingResult().getFieldErrors().stream()

@@ -1,5 +1,6 @@
 package ee.danych.nutrimatch.components;
 
+import ee.danych.nutrimatch.exceptions.XlsxFileNotFoundException;
 import ee.danych.nutrimatch.model.entity.Element;
 import ee.danych.nutrimatch.model.entity.Product;
 import ee.danych.nutrimatch.model.entity.ProductName;
@@ -35,8 +36,15 @@ public class ProductFileSerializer {
 
     public List<Product> getProductsFromExcel() throws IOException {
         ZipSecureFile.setMinInflateRatio(0);
-        FileInputStream file = getFileInputStream(productFilePath);
-        Workbook workbook = new XSSFWorkbook(file);
+        Workbook workbook;
+        FileInputStream file;
+        try {
+            file = getFileInputStream(productFilePath);
+            workbook = new XSSFWorkbook(file);
+        } catch (IOException e) {
+            throw new XlsxFileNotFoundException(productFilePath);
+        }
+
         Sheet sheet = workbook.getSheetAt(0);
 
         Iterator<Row> rowIterator = sheet.iterator();
