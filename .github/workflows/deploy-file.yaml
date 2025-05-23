@@ -9,8 +9,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
+      - name: grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: build java executable file
         run: ./gradlew bootJar
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
       - name: build image
         run: docker build -t danychit2003/core-nutrimatch .
