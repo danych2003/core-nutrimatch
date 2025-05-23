@@ -8,8 +8,13 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+
+      - name: build java executable file
+        run: ./gradlew bootJar
+
       - name: build image
         run: docker build -t danychit2003/core-nutrimatch .
+
       - name: push image to docker hub
         run: |
           docker push danychit2003/core-nutrimatch:latest
