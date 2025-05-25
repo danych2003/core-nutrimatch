@@ -55,6 +55,7 @@ dependencies {
 	testImplementation("org.mockito:mockito-core:5.17.0")
 	testImplementation("org.mockito:mockito-junit-jupiter:5.17.0")
 
+	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.8.6'
 	compileOnly 'org.projectlombok:lombok:1.18.38'
 	annotationProcessor 'org.projectlombok:lombok:1.18.38'
