@@ -1,4 +1,4 @@
-package ee.danych.nutrimatch.repository;
+package ee.danych.nutrimatch.exceptions;
 
 public interface ExceptionChecker {
     void method();

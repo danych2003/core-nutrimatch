@@ -1,11 +1,11 @@
 package ee.danych.nutrimatch.components;
 
+import ee.danych.nutrimatch.exceptions.ExceptionChecker;
 import ee.danych.nutrimatch.exceptions.XlsxFileNotFoundException;
 import ee.danych.nutrimatch.model.entity.Element;
 import ee.danych.nutrimatch.model.entity.Product;
 import ee.danych.nutrimatch.model.entity.ProductName;
 import ee.danych.nutrimatch.model.enums.Language;
-import ee.danych.nutrimatch.repository.ExceptionChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.apache.poi.ss.usermodel.Cell;
