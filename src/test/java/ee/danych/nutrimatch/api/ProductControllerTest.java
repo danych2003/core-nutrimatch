@@ -12,7 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -20,10 +23,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductControllerTest {
@@ -58,6 +61,29 @@ class ProductControllerTest {
     }
 
     @Test
+    void getProductWithFilters_withoutKeyword() throws Exception {
+        Page<Product> mockPage = new PageImpl<>(List.of(prepareTestProduct()));
+        when(productService.findAllByPage(0)).thenReturn(mockPage);
+
+        mockMvc.perform(get("/api/product")
+                        .param("current_page", "0"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("X-Available-Pages", "1"));
+    }
+
+    @Test
+    void getProductWithFilters_withKeyword() throws Exception {
+        Page<Product> mockPage = new PageImpl<>(List.of(prepareTestProduct()));
+        when(productService.filterProductsByWord("milk", 0)).thenReturn(mockPage);
+
+        mockMvc.perform(get("/api/product")
+                        .param("search_query", "milk")
+                        .param("current_page", "0"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("X-Available-Pages", "1"));
+    }
+
+    @Test
     void addProduct() throws Exception {
         Product product = prepareTestProduct();
         String json = objectMapper.writeValueAsString(product);
@@ -69,6 +95,31 @@ class ProductControllerTest {
 
 
         verify(productService, times(1)).save(product);
+    }
+
+    @Test
+    void serializeProducts() throws Exception {
+        when(productService.saveProductsFromExcel()).thenReturn(ResponseEntity.ok("Serialized"));
+
+        mockMvc.perform(get("/api/serialize"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testEndpointReturnsData() throws Exception {
+        mockMvc.perform(get("/api/test"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Data"));
+    }
+
+    @Test
+    void findRecipesWithIds() throws Exception {
+        Product product = prepareTestProduct();
+        when(productService.getProductById(List.of(1L, 2L))).thenReturn(List.of(product, product));
+
+        mockMvc.perform(get("/api/products")
+                        .param("ids", "1,2"))
+                .andExpect(status().isOk());
     }
 
     private Product prepareTestProduct() {

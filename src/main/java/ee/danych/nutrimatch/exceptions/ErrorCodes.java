@@ -11,6 +11,7 @@ public enum ErrorCodes {
     INVALID_PASSWORD("invalidPassword"),
     BAD_REQUEST("badRequest"),
     PRODUCT_NOT_FOUND("productNotFound"),
+    RECIPE_NOT_FOUND("recipeNotFound"),
     XLSX_FILE_NOT_FOUND("xlsxFileNotFound");
 
     private final String errorCode;

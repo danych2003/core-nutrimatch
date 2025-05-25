@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
@@ -27,5 +29,10 @@ public class RecipeService {
     public Page<Recipe> findAllByPage(int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         return recipeRepository.findAll(pageable);
+    }
+
+    public void deleteRecipeByTitle(String title) {
+        Optional<Recipe> recipeOpt = recipeRepository.findByTitleIgnoreCase(title);
+        recipeOpt.ifPresent(recipeRepository::delete);
     }
 }

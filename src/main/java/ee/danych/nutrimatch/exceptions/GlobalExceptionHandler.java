@@ -40,6 +40,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RecipeNotFoundException.class)
+    public ResponseEntity<?> handleRecipeNotFoundException(RecipeNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCodes.RECIPE_NOT_FOUND, exception.getMessage());
+        log.error("Error: {}, RecipeId: {}", errorResponse.errorCode, errorResponse.errorMessage);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(XlsxFileNotFoundException.class)
     public ResponseEntity<?> handleXlsxFileNotFoundException(XlsxFileNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(ErrorCodes.XLSX_FILE_NOT_FOUND, exception.getMessage());

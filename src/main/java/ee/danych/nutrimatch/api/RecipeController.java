@@ -49,4 +49,10 @@ public class RecipeController {
                 .toList();
         return new ResponseEntity<>(recipesResponse, headers, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/recipe", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteRecipe(@RequestParam("name") String recipeName) {
+        recipeService.deleteRecipeByTitle(recipeName);
+        return new ResponseEntity<>("Success", HttpStatus.ACCEPTED);
+    }
 }
