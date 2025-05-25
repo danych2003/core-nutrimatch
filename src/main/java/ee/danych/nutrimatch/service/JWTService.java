@@ -55,7 +55,6 @@ public class JWTService {
         try {
             return extractClaim(token, Claims::getSubject);
         } catch (Exception e) {
-            System.out.println("Failed to extract username from token: " + e.getMessage());
             return null;
         }
 
